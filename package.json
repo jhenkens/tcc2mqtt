@@ -8,6 +8,7 @@
     "tcc",
     "honeywell"
   ],
+  "main": "mqtt.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NorthernMan54/homebridge-tcc.git"
@@ -27,6 +28,9 @@
     "moment": ">2.20.1",
     "mqtt": "^4.2.6",
     "p-queue": ">=6.4.0",
+    "pino": "^6.7.0",
+    "pino-pretty": "^4.3.0",
+    "rc": "^1.2.8",
     "request": "^2.88.2",
     "uuid": "^8.3.1",
     "xml2json": ">=0.0.0"
