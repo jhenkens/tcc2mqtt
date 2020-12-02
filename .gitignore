@@ -29,3 +29,5 @@ node_modules
 package-lock.json
 therm.py
 lib/evohome.js
+secrets.js
+.idea
