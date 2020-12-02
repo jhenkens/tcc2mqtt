@@ -213,8 +213,29 @@ ChangeBuffer.prototype.put = function (state, lowPriority = false) {
     }
   });
 };
-// var mqttThermostat = new ThermostatImplementation(that,{'Name':'hi','ThermostatID':1234})
+
+// The signals we want to handle
+// NOTE: although it is tempting, the SIGKILL signal (9) cannot be intercepted and handled
+var signals = {
+  'SIGHUP': 1,
+  'SIGINT': 2,
+  'SIGTERM': 15
+};
+// Do any necessary shutdown logic for our application here
+const shutdown = function() {
+  logger.info("shutdown!");
+  process.exit(0);
+}
+// Create a listener for each of the signals that we want to handle
+Object.keys(signals).forEach((signal) => {
+  process.on(signal, () => {
+    logger.info(`process received a ${signal} signal`);
+    shutdown();
+  });
+});
+
+logger.info("Loading config from %s", config.configs)
 const tcc = new tccPlatform(logger, config);
 tcc.start()
-// console.log(tcc);
+
 

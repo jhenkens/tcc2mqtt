@@ -8,6 +8,8 @@ RUN apk add --no-cache --virtual .gyp \
         g++ \
     && npm install --production \
     && apk del .gyp
-COPY ["lib", "config.js", "mqtt.js", "./"]
+
+COPY "lib" "./lib"
+COPY ["config.js", "mqtt.js", "./"]
 
 CMD [ "node", "mqtt.js" ]
