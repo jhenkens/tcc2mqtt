@@ -18,16 +18,18 @@ function tccPlatform(log, config) {
   this.thermostats = {};
   this.username = config['username'];
   this.password = config['password'];
-  this.refresh = config['refresh'] || 300; // Update every 5 minutes
+  this.refresh = config['refresh']; // Update every 5 minutes
   this.log = log;
   this.devices = config['devices'];
   this.tcc = null;
   this.config = config;
+  log.level = config['logLevel'] || 'info';
 
   // Enable config based DEBUG logging enable
   this.debug = config['debug'] || false;
   if (this.debug) {
     debug.enabled = true;
+    log.level = 'debug';
   }
 }
 
@@ -70,7 +72,7 @@ tccPlatform.prototype.start = function () {
     this.log.info(err.stack);
     process.exit(1);
   });
-  setInterval(this.pollDevices.bind(this), this.refresh * 1000); // Poll every minute
+  setInterval(this.pollDevices.bind(this), this.refresh * 1000);
 };
 
 tccPlatform.prototype.pollDevices = function () {
@@ -80,6 +82,7 @@ tccPlatform.prototype.pollDevices = function () {
       this.log.debug("pollDevices - updateStatus %s", thermostat.name);
       var device = devices.hb[thermostat.ThermostatID];
       if (device) {
+        this.log.debug("Found device: %s", JSON.stringify(device));
         thermostat.updateStatus(device);
       } else {
         this.log.error("ERROR: no data for %s", thermostat.name);
@@ -157,7 +160,6 @@ Thermostat.prototype.setCoolingThresholdTemperature = function (value, callback)
   this.context.ChangeThermostat.put({
     CoolingThresholdTemperature: value
   }).then((device) => {
-    this.thermostat.updateStatus(device);
     callback(null, value);
   }).catch((error) => {
     callback(error);
@@ -237,5 +239,3 @@ Object.keys(signals).forEach((signal) => {
 logger.info("Loading config from %s", config.configs)
 const tcc = new tccPlatform(logger, config);
 tcc.start()
-
-

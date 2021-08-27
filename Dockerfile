@@ -3,7 +3,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN apk add --no-cache --virtual .gyp \
-        python \
+        python3 \
         make \
         g++ \
     && npm install --production \

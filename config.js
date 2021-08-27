@@ -18,6 +18,9 @@ const conf = require('rc')('tcc2mqtt', {
   away_heat_cool_mode: 'heat',
   use_auto_for_schedule_in_homekit: false,
   devices: undefined,
+  refresh: 300,
+  logLevel: 'info',
+  debug: false
 });
 
 
