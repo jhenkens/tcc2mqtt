@@ -21,12 +21,11 @@
     "homebridge": ">=0.4.16"
   },
   "dependencies": {
-    "async-mqtt": "^2.6.1",
+    "async-mqtt": ">=2.6.1",
     "debug": "^2.6.9",
     "easy-soap-request": ">=0.0.0",
     "fakegato-history": "^0.5.6",
     "moment": ">2.20.1",
-    "mqtt": "^4.2.6",
     "p-queue": "^6.6.2",
     "pino": "^6.7.0",
     "pino-pretty": "^4.3.0",
