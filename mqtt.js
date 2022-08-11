@@ -99,7 +99,7 @@ tccPlatform.prototype.pollDevices = function () {
       this.log.error("ERROR: pollDevices %s", err);
     }
     Object.entries(this.thermostats).forEach(function ([key, value]) {
-      value.thermostat.setUnavailable("Status missing");
+      value.thermostat.setUnavailable("Unexpected error");
     });
   });
 }
