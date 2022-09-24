@@ -106,7 +106,7 @@ tccPlatform.prototype.pollDevices = function () {
 
 function Thermostat(that, device) {
   this.log = that.log.child({scope: device.Name});;
-  this.thermostat = new ThermostatImplementation(this, that, device);
+  this.thermostat = new ThermostatImplementation(this, that.config, device);
   this.changeBuffer = new ChangeBuffer(this, that, this.thermostat);
 }
 

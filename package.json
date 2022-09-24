@@ -1,6 +1,6 @@
 {
   "name": "tcc2mqtt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Total Connect Comfort to Mqtt",
   "license": "ISC",
   "keywords": [
@@ -9,6 +9,9 @@
     "honeywell"
   ],
   "main": "mqtt.js",
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jhenkens/tcc2mqtt.git"
@@ -33,5 +36,8 @@
     "request": "^2.88.2",
     "uuid": "^8.3.1",
     "xml2json": ">=0.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.3"
   }
 }

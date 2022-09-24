@@ -31,3 +31,4 @@ therm.py
 lib/evohome.js
 .tcc2mqttrc
 .idea
+.vscode/
