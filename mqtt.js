@@ -111,7 +111,7 @@ function Thermostat(that, device) {
 }
 
 Thermostat.prototype.setTargetTemperature = function (value, callback) {
-  this.log.info("Setting TargetTemperature to %s", value);
+  this.log.info("Setting TargetTemperature to %s F", value.F);
   this.changeBuffer.put({
     TargetTemperature: value
   }).then((device) => {
