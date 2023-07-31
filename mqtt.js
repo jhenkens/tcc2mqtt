@@ -21,7 +21,9 @@ function tccPlatform(log, config) {
   this.refresh = config['refresh']; // Update every 5 minutes
   this.log = log;
   this.devices = config['devices'];
-  if(this.devices !== null && this.devices.length == 0){
+  if(this.devices !== null && this.devices.length > 0){
+    this.devices = this.devices.map(x => x.toString());
+  } else{
     this.devices = null;
   }
   this.tcc = null;
@@ -63,7 +65,7 @@ tccPlatform.prototype.start = function () {
     for (let zone in devices.hb) {
       const device = devices.hb[zone];
       this.log.debug("Creating device for %s", device.Name);
-      if (this.devices != null && !(this.devices.includes(device.ThermostatID))) {
+      if (this.devices != null && !(this.devices.includes(device.ThermostatID.toString()))) {
         this.log.info("Ignoring device %s - not in devices list %s", device.Name, device.ThermostatID);
         continue;
       }
