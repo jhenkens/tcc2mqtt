@@ -21,6 +21,9 @@ function tccPlatform(log, config) {
   this.refresh = config['refresh']; // Update every 5 minutes
   this.log = log;
   this.devices = config['devices'];
+  if(this.devices !== null && this.devices.length == 0){
+    this.devices = null;
+  }
   this.tcc = null;
   this.config = config;
   log.level = config['logLevel'] || 'info';
@@ -67,9 +70,9 @@ tccPlatform.prototype.start = function () {
       this.createThermostat(device);
     }
   }).catch((err) => {
-    this.log.info("Critical Error - No devices created, please restart.");
-    this.log.info(err.message);
-    this.log.info(err.stack);
+    this.log.warn("Critical Error - No devices created, please restart.");
+    this.log.warn(err.message);
+    this.log.warn(err.stack);
     process.exit(1);
   });
   setInterval(this.pollDevices.bind(this), this.refresh * 1000);
@@ -111,7 +114,7 @@ function Thermostat(that, device) {
 }
 
 Thermostat.prototype.setTargetTemperature = function (value, callback) {
-  this.log.info("Setting TargetTemperature to %s F", value.F);
+  this.log.debug("Setting TargetTemperature to %s F", value.F);
   this.changeBuffer.put({
     TargetTemperature: value
   }).then((device) => {
@@ -122,7 +125,7 @@ Thermostat.prototype.setTargetTemperature = function (value, callback) {
 }
 
 Thermostat.prototype.setTargetHeatingCooling = function (value, callback) {
-  this.log.info("Setting switch to %s", value);
+  this.log.debug("Setting switch to %s", value);
   this.changeBuffer.put({
     TargetHeatingCooling: value
   }).then((device) => {
@@ -133,7 +136,7 @@ Thermostat.prototype.setTargetHeatingCooling = function (value, callback) {
 }
 
 Thermostat.prototype.setHoldMode = function (value, lowPriority, callback) {
-  this.log.info("Setting hold mode to %s", value);
+  this.log.debug("Setting hold mode to %s", value);
   this.changeBuffer.put({
     StatusHeat: value,
     StatusCool: value,
@@ -145,7 +148,7 @@ Thermostat.prototype.setHoldMode = function (value, lowPriority, callback) {
 }
 
 Thermostat.prototype.setHeatingThresholdTemperature = function (value, callback) {
-  this.log.info("Setting HeatingThresholdTemperature to %s", value);
+  this.log.debug("Setting HeatingThresholdTemperature to %s", value);
   this.changeBuffer.put({
     HeatingThresholdTemperature: value
   }).then((device) => {
@@ -156,7 +159,7 @@ Thermostat.prototype.setHeatingThresholdTemperature = function (value, callback)
 }
 
 Thermostat.prototype.setCoolingThresholdTemperature = function (value, callback) {
-  this.log.info("Setting CoolingThresholdTemperature for %s to %s", this.thermostat.name, value);
+  this.log.debug("Setting CoolingThresholdTemperature for %s to %s", this.thermostat.name, value);
   this.context.ChangeThermostat.put({
     CoolingThresholdTemperature: value
   }).then((device) => {
@@ -225,13 +228,13 @@ var signals = {
 };
 // Do any necessary shutdown logic for our application here
 const shutdown = function() {
-  logger.info("shutdown!");
+  logger.debug("shutdown!");
   process.exit(0);
 }
 // Create a listener for each of the signals that we want to handle
 Object.keys(signals).forEach((signal) => {
   process.on(signal, () => {
-    logger.info(`process received a ${signal} signal`);
+    logger.debug(`process received a ${signal} signal`);
     shutdown();
   });
 });
