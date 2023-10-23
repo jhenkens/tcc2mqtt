@@ -1,3 +1,6 @@
+![Docker Pulls](https://img.shields.io/docker/pulls/johhenkens/tcc2mqtt)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/jhenkens/tcc2mqtt/docker-publish.yml)
+
 # homebridge-tcc
 This is a fork of homebridge-tcc, using it's libraries to implement a what I am currently calling tcc2mqtt - an MQTT adapter for Honeywell TCC thermostats. Very much a WIP
 
