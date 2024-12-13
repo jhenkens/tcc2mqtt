@@ -22,6 +22,7 @@ const conf = require('rc')('tcc2mqtt', {
   logLevel: 'info',
   debug: false,
   change_delay: 0.5,
+  update_state_optimistically: true,
 });
 
 
