@@ -112,7 +112,7 @@ tccPlatform.prototype.pollDevices = function () {
 function Thermostat(that, device) {
   this.log = that.log.child({scope: device.Name});;
   this.thermostat = new ThermostatImplementation(this, that.config, device);
-  this.changeBuffer = new ChangeBuffer(this, that, this.thermostat, that.config.change_delay);
+  this.changeBuffer = new ChangeBuffer(this, that, this.thermostat, Math.floor(1000 * that.config.change_delay));
 }
 
 Thermostat.prototype.setTargetTemperature = function (value, callback) {
