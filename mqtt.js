@@ -112,7 +112,7 @@ tccPlatform.prototype.pollDevices = function () {
 function Thermostat(that, device) {
   this.log = that.log.child({scope: device.Name});;
   this.thermostat = new ThermostatImplementation(this, that.config, device);
-  this.changeBuffer = new ChangeBuffer(this, that, this.thermostat);
+  this.changeBuffer = new ChangeBuffer(this, that, this.thermostat, that.config.change_delay);
 }
 
 Thermostat.prototype.setTargetTemperature = function (value, callback) {
@@ -172,14 +172,14 @@ Thermostat.prototype.setCoolingThresholdTemperature = function (value, callback)
 }
 
 // Consolidate change requests received over 100ms into a single request
-function ChangeBuffer(wrapper, platform, thermostat) {
+function ChangeBuffer(wrapper, platform, thermostat, waitTimeUpdate = 500) {
   this.log = wrapper.log;
   this.tcc = platform.tcc;
   this.desiredState = {};
   this.deferrals = [];
   this.ThermostatID = thermostat.ThermostatID;
   this.thermostat = thermostat;
-  this.waitTimeUpdate = 500; // wait 500ms before processing change
+  this.waitTimeUpdate = waitTimeUpdate; // wait 500ms before processing change
 }
 
 ChangeBuffer.prototype.put = function (state, lowPriority = false) {

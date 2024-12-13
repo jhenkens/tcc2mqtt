@@ -27,12 +27,20 @@
         "description": "Your Honeywell password."
       },
       "refresh": {
-        "title": "Refresh Token",
+        "title": "Refresh Interval",
         "default": 60,
         "type": "integer",
         "minimum": 30,
         "maximum": 3600,
         "description": "Data polling interval in seconds, defaults to 1 minute."
+      },
+      "change_delay": {
+        "title": "Change Delay",
+        "default": 0.5,
+        "type": "float",
+        "minimum": 0,
+        "maximum": 10,
+        "description": "Change delay in seconds, to batch changes together. Defaults to 0.5 seconds."
       },
       "storage": {
         "title": "Storage",
